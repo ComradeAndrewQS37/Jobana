@@ -1,0 +1,20 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    username: postgres
+    password: q314500w
+    url: jdbc:postgresql://localhost:5432/jobana
+    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        ddl-auto: update
+        show_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
