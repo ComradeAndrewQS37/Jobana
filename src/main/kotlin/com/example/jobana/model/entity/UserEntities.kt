@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import java.time.LocalDate
 
+// тестовый коммит
 @Entity
 class UserEntity(
         @Column(nullable = false, length = 128)
