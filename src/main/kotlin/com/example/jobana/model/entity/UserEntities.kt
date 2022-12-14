@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import org.intellij.lang.annotations.Pattern
 import java.time.LocalDate
 
+// тестовый коммит 1
 @Entity
 @Table(name = "Users")
 class User(
