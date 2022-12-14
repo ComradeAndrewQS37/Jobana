@@ -1,4 +1,4 @@
-package com.example.jobana.model.entity
+package com.example.jobana.model.entities
 
 import jakarta.persistence.Column
 import jakarta.persistence.GeneratedValue

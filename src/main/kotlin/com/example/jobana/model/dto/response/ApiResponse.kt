@@ -1,4 +1,4 @@
-package com.example.jobana.controller.response
+package com.example.jobana.model.dto.response
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

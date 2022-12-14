@@ -1,6 +1,6 @@
 package com.example.jobana.controller
 
-import com.example.jobana.controller.response.HealthResponse
+import com.example.jobana.model.dto.response.HealthResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
