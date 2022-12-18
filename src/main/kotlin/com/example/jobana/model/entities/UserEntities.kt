@@ -38,8 +38,6 @@ class User(
         @Column
         var lastLogIn : LocalDateTime?,
 
-        @Column
-        var bannedTill : LocalDateTime?,
 
 ) : AbstractEntity()
 

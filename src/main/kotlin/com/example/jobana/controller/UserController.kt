@@ -1,23 +1,40 @@
 package com.example.jobana.controller
 
+import com.example.jobana.model.dto.request.UserRequest
+import com.example.jobana.model.dto.response.ApiResponse
+import com.example.jobana.model.dto.response.message.DeletedMessage
 import com.example.jobana.service.UserService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/users")
-class UserController (
-        val service : UserService
-        )
-{
+class UserController(
+    val service: UserService
+) {
 
     @GetMapping("/all")
     fun getAll() = service.getAll()
 
 
     @GetMapping
-    fun getById(@RequestParam id:Long) = service.getById(id)
+    fun getById(@RequestParam id: Long) = service.getById(id)
+
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
+    fun createUser(@RequestBody request: UserRequest) = service.createUser(request.asEntity())
+
+    @DeleteMapping
+    fun deleteUser(@RequestParam id: Long): ResponseEntity<ApiResponse> {
+        service.deleteUser(id)
+        return DeletedMessage().asResponse()
+    }
+
+    /*
+    @Modifying
+    @PutMapping
+    fun update(@RequestParam id:Long, @RequestBody request: UserRequest) = service.updateUser(id, request)
+     */
 
 }
