@@ -5,8 +5,8 @@ server:
 
 spring:
   datasource:
-    username: postgres
-    password: q314500w
+    username: westik
+    password: 1234567890
     url: jdbc:postgresql://localhost:5432/jobana
     driver-class-name: org.postgresql.Driver
 
