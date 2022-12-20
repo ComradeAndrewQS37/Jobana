@@ -1,6 +1,6 @@
 package com.example.jobana.controller
 
-import com.example.jobana.model.dto.request.UserRequest
+import com.example.jobana.model.dto.request.UserRegisterDTO
 import com.example.jobana.model.dto.response.ApiResponse
 import com.example.jobana.model.dto.response.message.DeletedMessage
 import com.example.jobana.service.UserService
@@ -23,7 +23,8 @@ class UserController(
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    fun createUser(@RequestBody request: UserRequest) = service.createUser(request.asEntity())
+    fun createUser(@RequestBody request: UserRegisterDTO) = service.createUser(request.asEntity())
+
 
     @DeleteMapping
     fun deleteUser(@RequestParam id: Long): ResponseEntity<ApiResponse> {
@@ -32,7 +33,6 @@ class UserController(
     }
 
     /*
-    @Modifying
     @PutMapping
     fun update(@RequestParam id:Long, @RequestBody request: UserRequest) = service.updateUser(id, request)
      */

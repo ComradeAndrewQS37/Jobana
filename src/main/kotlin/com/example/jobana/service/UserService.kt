@@ -32,4 +32,6 @@ class UserService(val userDao: UserDao) {
         if (!userDao.existsById(id)) throw ResourceNotFoundException(message="Resource not found : invalid id $id")
         userDao.deleteById(id)
     }
+
+    fun findByEmail(email : String) = userDao.findByEmail(email)
 }

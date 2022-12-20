@@ -22,11 +22,15 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    //runtimeOnly("org.postgresql:postgresql")
-    runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation ("org.hibernate.validator:hibernate-validator:6.1.3.Final")
 
-    implementation ("org.hibernate.validator:hibernate-validator:6.1.2.Final")
+
+    implementation("org.springframework.security:spring-security-crypto:5.7.3")
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
+
+    runtimeOnly("org.postgresql:postgresql")
+    //runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 }
 
 tasks.withType<KotlinCompile> {

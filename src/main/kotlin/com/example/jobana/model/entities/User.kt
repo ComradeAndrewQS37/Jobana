@@ -1,10 +1,11 @@
 package com.example.jobana.model.entities
 
 import jakarta.persistence.*
-import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Pattern
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.jvm.Transient
 
 
 @Entity
@@ -27,27 +28,43 @@ class User(
         @Pattern(regexp = "^[\\w-.]+@([\\w-]+.)+[\\w-]+$")
         var email : String,
 
+
+) : AbstractEntity(){
+
+        @Transient
+        private val passwordEncoder = BCryptPasswordEncoder()
+
+        @Column(nullable=false, length = 60)
+        var password : String = ""
+                set(value) {
+                        field = passwordEncoder.encode(value)
+                }
+
         // TODO Как хранить номер телефона по-человечески? Может только +7?
         @Column(unique = true, length = 20)
-        var phoneNumber : String?,
+        var phoneNumber : String? = null
 
+        /*
         @OneToOne
         @JoinColumn(name="cv_id", referencedColumnName = "id")
         var cv : CV?, // резюме
+         */
 
         @Column
-        var lastLogIn : LocalDateTime?,
+        var lastLogIn : LocalDateTime? = null
 
         @OneToMany(mappedBy="user")
-        var supportMessages: List<SupportMessages>?,
+        var supportMessages: List<SupportMessages>? = null
 
         @OneToMany(mappedBy="user")
-        var reportMessages: List<ReportMessages>?,
+        var reportMessages: List<ReportMessages>? = null
 
+        fun comparePassword(password : String) : Boolean{
+                return BCryptPasswordEncoder().matches(password, this.password)
+        }
+}
 
-) : AbstractEntity()
-
-
+/*
 // Резюме
 @Entity
 @Table(name = "CV")
@@ -122,3 +139,6 @@ class Experience(
         var duties : String,
 
 ) : AbstractEntity()
+
+ */
+
