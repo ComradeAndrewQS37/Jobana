@@ -38,6 +38,12 @@ class User(
         @Column
         var lastLogIn : LocalDateTime?,
 
+        @OneToMany(mappedBy="user")
+        var supportMessages: List<SupportMessages>?,
+
+        @OneToMany(mappedBy="user")
+        var reportMessages: List<ReportMessages>?,
+
 
 ) : AbstractEntity()
 

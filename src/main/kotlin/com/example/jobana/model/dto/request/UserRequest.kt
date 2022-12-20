@@ -1,9 +1,7 @@
 package com.example.jobana.model.dto.request
 
 import com.example.jobana.exception.dto.InvalidRequestDataException
-import com.example.jobana.model.entities.CV
-import com.example.jobana.model.entities.Gender
-import com.example.jobana.model.entities.User
+import com.example.jobana.model.entities.*
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -19,7 +17,12 @@ class UserRequest(
     val cv: CV? = null,
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     val lastLogIn: LocalDateTime? = null,
+
+
 ) {
+
+    val supportMessages: List<SupportMessages>? = null
+    val reportMessages: List<ReportMessages>? = null
 
     fun asEntity() = User(
         firstName,
@@ -35,6 +38,10 @@ class UserRequest(
         email,
         phoneNumber,
         cv,
-        lastLogIn
+        lastLogIn,
+        supportMessages,
+        reportMessages,
     )
+
+
 }
