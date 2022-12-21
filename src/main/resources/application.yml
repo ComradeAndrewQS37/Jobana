@@ -5,10 +5,10 @@ server:
 
 spring:
   datasource:
-    username: westik
-    password: 1234567890
-    url: jdbc:postgresql://localhost:5432/jobana
-    driver-class-name: org.postgresql.Driver
+    username: root
+    password: realpongo
+    url: jdbc:mariadb://localhost:3306/jobana
+    driver-class-name: org.mariadb.jdbc.Driver
 
 
   jpa:
@@ -17,4 +17,4 @@ spring:
       hibernate:
         ddl-auto: update
         show_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.MariaDB103Dialect
