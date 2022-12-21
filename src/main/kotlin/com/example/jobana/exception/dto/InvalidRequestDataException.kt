@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus
 
 
 /** если в запросе некорректные данные (например, неподходящий email или дата)**/
-class InvalidRequestDataException (
-    status: HttpStatus = HttpStatus.UNPROCESSABLE_ENTITY,
-    message : String = "Unable to process the request"
+class InvalidRequestDataException(
+    message: String = "Unable to process the request",
+    status: HttpStatus = HttpStatus.UNPROCESSABLE_ENTITY
 ) : AbstractApiException(status, message)

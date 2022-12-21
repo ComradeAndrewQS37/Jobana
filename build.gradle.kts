@@ -23,11 +23,13 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    implementation ("org.hibernate.validator:hibernate-validator:6.1.3.Final")
+    implementation ("org.hibernate.validator:hibernate-validator:8.0.0.Final")
 
 
     implementation("org.springframework.security:spring-security-crypto:5.7.3")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation ("javax.xml.bind:jaxb-api:2.2.4")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 
     runtimeOnly("org.postgresql:postgresql")
     //runtimeOnly("org.mariadb.jdbc:mariadb-java-client")

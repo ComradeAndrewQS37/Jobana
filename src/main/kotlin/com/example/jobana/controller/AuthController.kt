@@ -1,15 +1,18 @@
 package com.example.jobana.controller
 
+import com.example.jobana.auth.JwtManager
+import com.example.jobana.auth.comparePassword
+import com.example.jobana.exception.dto.ForbiddenException
+import com.example.jobana.exception.dto.UnauthorisedException
 import com.example.jobana.model.dto.request.UserLoginDTO
 import com.example.jobana.model.dto.request.UserRegisterDTO
 import com.example.jobana.model.entities.User
 import com.example.jobana.service.UserService
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
-import org.apache.logging.log4j.message.Message
+import io.jsonwebtoken.SignatureException
+import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 class AuthController(private val userService: UserService) {
@@ -21,23 +24,49 @@ class AuthController(private val userService: UserService) {
     }
 
     @PostMapping("/signin")
-    fun signIn(@RequestBody request: UserLoginDTO): ResponseEntity<Any> {
+    fun signIn(@RequestBody request: UserLoginDTO, response: HttpServletResponse): ResponseEntity<Any> {
         val user = userService.findByEmail(request.email)
-            ?: return ResponseEntity.badRequest().body("User not found") //TODO Exception
+            ?: throw ForbiddenException("Invalid username")
 
-        if (!user.comparePassword(request.password)) {
-            return ResponseEntity.badRequest().body("Wrong password") //TODO Exception
+        if (!comparePassword(request.password, user.password)) {
+            throw ForbiddenException("Invalid password")
         }
 
+
         val issuer = user.id.toString()
+        val jwt = JwtManager.getJwtToken(issuer)
 
-        val jwt = Jwts.builder()
-            .setIssuer(issuer)
-            .setExpiration(Date(System.currentTimeMillis() + 60 * 24 * 1000))
-            .signWith(SignatureAlgorithm.HS512,"secret")
-            .compact()
+        val cookie = Cookie("jwt", jwt)
+        cookie.isHttpOnly = true
+        response.addCookie(cookie)
 
-        return ResponseEntity.ok(jwt)
+        return ResponseEntity.ok("signed in successfully")
+    }
+
+    @GetMapping("/me")
+    fun userMe(@CookieValue(name = "jwt") jwt: String?): ResponseEntity<Any> {
+        if (jwt == null) {
+            throw UnauthorisedException()
+        }
+
+        val body = try {
+            JwtManager.getJwtBody(jwt)
+        } catch (e: SignatureException) {
+            throw UnauthorisedException("Invalid token")
+        }
+
+        val user = userService.getById(body.issuer.toLong())
+        return ResponseEntity.ok(user)
+    }
+
+    @PostMapping("/logout")
+    fun logOut(response: HttpServletResponse): ResponseEntity<Any> {
+        val cookie = Cookie("jwt", "")
+        cookie.maxAge = 0
+
+        response.addCookie(cookie)
+
+        return ResponseEntity.ok("Logged out successfully")
     }
 
 }

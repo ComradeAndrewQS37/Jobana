@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus
 
 /**если другие типы исключений не подходят то будет выброшено это**/
 class InternalServerException(
-    status: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR,
-    message : String = "Internal server error"
+    message: String = "Internal server error",
+    status: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR
+
 ) : AbstractApiException(status, message)

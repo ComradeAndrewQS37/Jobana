@@ -1,7 +1,10 @@
 package com.example.jobana.model.dto.request
 
 import com.example.jobana.exception.dto.InvalidRequestDataException
-import com.example.jobana.model.entities.*
+import com.example.jobana.model.entities.Gender
+import com.example.jobana.model.entities.ReportMessages
+import com.example.jobana.model.entities.SupportMessages
+import com.example.jobana.model.entities.User
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.LocalDate
 

@@ -2,8 +2,6 @@ package com.example.jobana.exception
 
 import com.example.jobana.exception.dto.AbstractApiException
 import com.example.jobana.exception.dto.InternalServerException
-import com.example.jobana.exception.dto.InvalidRequestDataException
-import com.example.jobana.exception.dto.ResourceNotFoundException
 import com.example.jobana.model.dto.response.ApiResponse
 import org.slf4j.LoggerFactory
 
@@ -16,20 +14,8 @@ import org.springframework.web.context.request.WebRequest
 class ExceptionResolver {
     private val logger = LoggerFactory.getLogger(ExceptionResolver::class.java)
 
-    @ExceptionHandler(value = [InvalidRequestDataException::class])
-    protected fun handleInvalidRequest(cause: AbstractApiException, request: WebRequest): ResponseEntity<ApiResponse> {
-        logger.info(cause.stackTraceToString())
-        return cause.asResponse()
-    }
-
-    @ExceptionHandler(value = [ResourceNotFoundException::class])
-    protected fun handleResNotFound(cause: AbstractApiException, request: WebRequest): ResponseEntity<ApiResponse> {
-        logger.info(cause.stackTraceToString())
-        return cause.asResponse()
-    }
-
     @ExceptionHandler(value = [AbstractApiException::class])
-    protected fun handleAbstract(cause: AbstractApiException, request: WebRequest): ResponseEntity<ApiResponse> {
+    protected fun handleApiException(cause: AbstractApiException, request: WebRequest): ResponseEntity<ApiResponse> {
         logger.info(cause.stackTraceToString())
         return cause.asResponse()
     }

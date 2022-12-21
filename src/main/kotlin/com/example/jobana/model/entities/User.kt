@@ -1,67 +1,58 @@
 package com.example.jobana.model.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.Pattern
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.time.LocalDate
 import java.time.LocalDateTime
-import kotlin.jvm.Transient
 
 
 @Entity
 @Table(name = "Users")
 class User(
-        @Column(nullable = false, length = 128)
-        var firstName : String, // имя
+    @Column(nullable = false, length = 128)
+    var firstName: String, // имя
 
-        @Column(nullable = false, length = 128)
-        var lastName : String, // фамилия
+    @Column(nullable = false, length = 128)
+    var lastName: String, // фамилия
 
-        @Column(nullable = false)
-        var birthDate : LocalDate,
+    @Column(nullable = false)
+    var birthDate: LocalDate,
 
-        @Column(nullable = false)
-        @Enumerated(EnumType.STRING)
-        var gender : Gender,
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    var gender: Gender,
 
-        @Column(unique = true, nullable = false, length = 320)
-        @Pattern(regexp = "^[\\w-.]+@([\\w-]+.)+[\\w-]+$")
-        var email : String,
+    @Column(unique = true, nullable = false, length = 320)
+    @Pattern(regexp = "^[\\w-.]+@([\\w-]+.)+[\\w-]+$")
+    var email: String,
 
 
-) : AbstractEntity(){
+    ) : AbstractEntity() {
 
-        @Transient
-        private val passwordEncoder = BCryptPasswordEncoder()
 
-        @Column(nullable=false, length = 60)
-        var password : String = ""
-                set(value) {
-                        field = passwordEncoder.encode(value)
-                }
+    @Column(nullable = false, length = 60)
+    @JsonIgnore
+    var password: String = ""
 
-        // TODO Как хранить номер телефона по-человечески? Может только +7?
-        @Column(unique = true, length = 20)
-        var phoneNumber : String? = null
+    // TODO Как хранить номер телефона по-человечески? Может только +7?
+    @Column(unique = true, length = 20)
+    var phoneNumber: String? = null
 
-        /*
-        @OneToOne
-        @JoinColumn(name="cv_id", referencedColumnName = "id")
-        var cv : CV?, // резюме
-         */
+    /*
+    @OneToOne
+    @JoinColumn(name="cv_id", referencedColumnName = "id")
+    var cv : CV?, // резюме
+     */
 
-        @Column
-        var lastLogIn : LocalDateTime? = null
+    @Column
+    var lastLogIn: LocalDateTime? = null
 
-        @OneToMany(mappedBy="user")
-        var supportMessages: List<SupportMessages>? = null
+    @OneToMany(mappedBy = "user")
+    var supportMessages: List<SupportMessages>? = null
 
-        @OneToMany(mappedBy="user")
-        var reportMessages: List<ReportMessages>? = null
-
-        fun comparePassword(password : String) : Boolean{
-                return BCryptPasswordEncoder().matches(password, this.password)
-        }
+    @OneToMany(mappedBy = "user")
+    var reportMessages: List<ReportMessages>? = null
 }
 
 /*

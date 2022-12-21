@@ -2,9 +2,10 @@ package com.example.jobana.service
 
 import com.example.jobana.exception.dto.InvalidRequestDataException
 import com.example.jobana.exception.dto.ResourceNotFoundException
-import com.example.jobana.model.repository.UserDao
 import com.example.jobana.model.entities.User
+import com.example.jobana.model.repository.UserDao
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 
@@ -25,6 +26,8 @@ class UserService(val userDao: UserDao) {
             throw InvalidRequestDataException(message = "Invalid field value : email")
         }
 
+        val encodedPassword = BCryptPasswordEncoder().encode(user.password)
+        user.password = encodedPassword
         return userDao.save(user)
     }
 
