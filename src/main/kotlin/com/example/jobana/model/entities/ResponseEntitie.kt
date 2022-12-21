@@ -1,7 +1,6 @@
 package com.example.jobana.model.entities
 
-import com.example.jobana.model.entity.ClientsAdverts
-import com.example.jobana.model.entity.ExpertsAdverts
+import com.example.jobana.model.entity.Advert
 import jakarta.persistence.*
 
 @Entity
@@ -15,13 +14,7 @@ class Response (
     var isAccepted : Boolean,
 
     @ManyToOne
-    @JoinColumn(name="expertAdvert_id")
-    val expertAdvert : ExpertsAdverts,
-
-    //TODO как делать етот .... constraint
-
-    @ManyToOne
-    @JoinColumn(name="clientAdvert_id")
-    val clientAdvert : ClientsAdverts,
+    @JoinColumn(name="advert_id")
+    val advert : Advert,
 
     ) : AbstractEntity()

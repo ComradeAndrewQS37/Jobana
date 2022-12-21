@@ -5,41 +5,41 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "SupportMessages")
 class SupportMessages (
-        @ManyToOne
+    @ManyToOne
         @JoinColumn(name="user_id", nullable = false)
         var user: User,
 
-        @ManyToOne
+    @ManyToOne
         @JoinColumn(name="admin_id", nullable = false)
         var admin: Admin,
 
-        @Column(nullable = false, length = 1024)
+    @Column(nullable = false, length = 1024)
         var description : String,
 
-        @Column(nullable = false)
+    @Column(nullable = false)
         @Enumerated(EnumType.STRING)
-        var status : Status,
+        var status : SRMStatus,
 
-) : AbstractEntity()
+    ) : AbstractEntity()
 
 
 @Entity
 @Table(name = "ReportMessages")
 class ReportMessages (
-        @ManyToOne
+    @ManyToOne
         @JoinColumn(name="user_id", nullable = false)
         var user: User,
 
-        @ManyToOne
+    @ManyToOne
         @JoinColumn(name="admin_id", nullable = false)
         var admin: Admin,
 
-        @Column(nullable = false, length = 1024)
+    @Column(nullable = false, length = 1024)
         var rp_description : String,
 
-        @Column(nullable = false)
+    @Column(nullable = false)
         @Enumerated(EnumType.STRING)
-        var status : Status,
+        var status : SRMStatus,
 
         //Здесь должны быть указатели на то, на что жалуются
         //TODO ...

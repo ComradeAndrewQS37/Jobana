@@ -1,5 +1,6 @@
 package com.example.jobana.model.entities
 
+import com.example.jobana.model.entity.Advert
 import jakarta.persistence.*
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Pattern
@@ -44,8 +45,12 @@ class User(
         @OneToMany(mappedBy="user")
         var reportMessages: List<ReportMessages>?,
 
+        @OneToMany(mappedBy="author")
+        var adverts: List<Advert>?
 
-) : AbstractEntity()
+) : AbstractEntity(){
+
+}
 
 
 // Резюме
