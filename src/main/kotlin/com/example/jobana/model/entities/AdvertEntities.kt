@@ -1,8 +1,6 @@
 package com.example.jobana.model.entity
 
-import com.example.jobana.model.entities.AbstractEntity
-import com.example.jobana.model.entities.Reason
-import com.example.jobana.model.entities.User
+import com.example.jobana.model.entities.*
 import jakarta.persistence.*
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -44,7 +42,10 @@ class ExpertsAdverts (
 
     @Column(nullable = true)
     @Enumerated(EnumType.STRING)
-    var closedReason : Reason
+    var closedReason : Reason,
+
+    @OneToMany(mappedBy="expertAdvert")
+    var response: List<Response>?
 
 
 ) : AdvertEntity(author, title, description, updatedAt, closedAt, place, price)
@@ -55,28 +56,9 @@ class ClientsAdverts (
     author: User, title: String, description: String, updatedAt: LocalDateTime, closedAt: LocalDateTime, place: String, price: Int,
 
     @Column(nullable = true)
-    var isBlocked : Boolean
+    var isBlocked : Boolean,
+
+    @OneToMany(mappedBy="clientAdvert")
+    var response: List<Response>?
 
 ) : AdvertEntity(author, title, description, updatedAt, closedAt, place, price)
-
-@Entity
-@Table(name="Responses")
-class Response (
-    @OneToOne
-    @JoinColumn(name="user_id", nullable = false)
-    val user: User,
-
-    @Column(nullable = false)
-    var isAccepted : Boolean,
-
-    @ManyToOne
-    @JoinColumn(name="expert_advert_id", nullable = true)
-    val expertAdvert : ExpertsAdverts,
-
-    //TODO как делать етот .... constraint
-
-    @ManyToOne
-    @JoinColumn(name="expert_advert_id", nullable = true)
-    val clientAdvert : ClientsAdverts,
-
-) : AbstractEntity()

@@ -1,7 +1,7 @@
 package com.example.jobana.service
 
 import com.example.jobana.exception.dto.ResourceNotFoundException
-import com.example.jobana.model.entity.Response
+import com.example.jobana.model.entities.Response
 import com.example.jobana.model.repository.ResponseDao
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
