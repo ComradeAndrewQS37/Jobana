@@ -19,4 +19,7 @@ spring:
         show_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-
+app:
+  security:
+    secret : '${secret: "jobana_default_secret"}'
+    admin_password: '${admin_password: password}'

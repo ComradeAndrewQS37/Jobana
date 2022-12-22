@@ -1,7 +1,7 @@
 package com.example.jobana.controller
 
-import com.example.jobana.auth.JwtManager
-import com.example.jobana.auth.comparePassword
+import com.example.jobana.security.JwtManager
+import com.example.jobana.security.comparePassword
 import com.example.jobana.exception.dto.ForbiddenException
 import com.example.jobana.exception.dto.UnauthorisedException
 import com.example.jobana.model.dto.request.UserLoginDTO
@@ -13,9 +13,19 @@ import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.security.core.context.SecurityContextHolder
 
 @RestController
-class AuthController(private val userService: UserService) {
+class AuthController(private val userService: UserService, private val jwtManager: JwtManager) {
+
+    // для тестирования
+    @GetMapping("/admin")
+    fun adminTest() : ResponseEntity<Any>{
+
+        val auth = SecurityContextHolder.getContext().authentication
+
+        return ResponseEntity.ok("You are admin : ${auth.name}")
+    }
 
     @PostMapping("/signup")
     fun signUp(@RequestBody request: UserRegisterDTO): ResponseEntity<User> {
@@ -32,15 +42,14 @@ class AuthController(private val userService: UserService) {
             throw ForbiddenException("Invalid password")
         }
 
-
         val issuer = user.id.toString()
-        val jwt = JwtManager.getJwtToken(issuer)
+        val jwt = jwtManager.getJwtToken(issuer)
 
         val cookie = Cookie("jwt", jwt)
         cookie.isHttpOnly = true
         response.addCookie(cookie)
 
-        return ResponseEntity.ok("signed in successfully")
+        return ResponseEntity.ok(user)
     }
 
     @GetMapping("/me")
@@ -50,7 +59,7 @@ class AuthController(private val userService: UserService) {
         }
 
         val body = try {
-            JwtManager.getJwtBody(jwt)
+            jwtManager.getJwtBody(jwt)
         } catch (e: SignatureException) {
             throw UnauthorisedException("Invalid token")
         }

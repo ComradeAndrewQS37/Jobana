@@ -26,10 +26,15 @@ dependencies {
     implementation ("org.hibernate.validator:hibernate-validator:8.0.0.Final")
 
 
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.security:spring-security-crypto:5.7.3")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation ("javax.xml.bind:jaxb-api:2.2.4")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    //implementation("org.springframework.security:spring-security-config:5.2.1.RELEASE")
+    //implementation ("javax.servlet:javax.servlet-api:3.0.1")
+    //implementation("org.springframework.boot:spring-boot-starter-parent:1.2.1.RELEASE")
+
+
 
     runtimeOnly("org.postgresql:postgresql")
     //runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
